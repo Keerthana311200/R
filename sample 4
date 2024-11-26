@@ -1,0 +1,84 @@
+#1)Multidimensional Array
+arr<-array(1:24,dim=c(3,4,2))
+cat("element:",arr[2,3,1],"\n")
+
+#2)
+# Load the dataset
+data("airquality")
+
+# Check if the dataset is a data frame
+is_data_frame <- is.data.frame(airquality)
+print(paste("Is airquality a data frame? ", is_data_frame))
+
+# Order the data frame by the first and second columns (Ozone and Solar.R)
+airquality_ordered <- airquality[order(airquality$Ozone, airquality$Solar.R), ]
+
+# Remove the 'Solar.R' and 'Wind' columns
+airquality_removed <- airquality_ordered[, !(names(airquality_ordered) %in% c("Solar.R", "Wind"))]
+
+# Display the modified data frame
+print(head(airquality_removed))
+
+3)
+# Load the ChickWeight dataset
+data("ChickWeight")
+
+# (i) Order by 'weight' in ascending order grouped by 'diet', then extract the last 6 records
+chickweight_ordered <- ChickWeight[order(ChickWeight$diet, ChickWeight$weight), ]
+last_6_records <- tail(chickweight_ordered, 6)
+print("Last 6 records ordered by weight within diet:")
+print(last_6_records)
+
+# (ii) a) Perform melting based on 'Chick', 'Time', and 'Diet'
+library(reshape2)
+chick_melted <- melt(ChickWeight, id.vars = c("Chick", "Time", "Diet"))
+print("Melted dataset:")
+print(head(chick_melted))
+
+# b) Perform casting to calculate the mean of 'weight' grouped by 'Diet'
+chick_mean_weight <- dcast(chick_melted, Diet ~ variable, fun.aggregate = mean, value.var = "value")
+print("Mean of weight grouped by Diet:")
+print(chick_mean_weight)
+
+# c) Perform casting to calculate the mode of 'weight' grouped by 'Diet'
+chick_mode_weight <- dcast(chick_melted, Diet ~ variable, fun.aggregate = function(x) as.numeric(names(sort(table(x), decreasing = TRUE))[1]), value.var = "value")
+print("Mode of weight grouped by Diet:")
+print(chick_mode_weight)
+
+4)
+# Load the iris dataset
+data(iris)
+
+# Randomly sample the dataset into 80% training and 20% testing
+set.seed(123)  # For reproducibility
+train_indices <- sample(1:nrow(iris), 0.8 * nrow(iris))
+train_data <- iris[train_indices, ]
+test_data <- iris[-train_indices, ]
+
+# Train logistic regression model with 'Species' as target and 'Petal.Width' and 'Petal.Length' as predictors
+logistic_model <- glm(Species ~ Petal.Width + Petal.Length, data = train_data, family = "binomial")
+
+# Predict probabilities on the test data
+pred_probs <- predict(logistic_model, newdata = test_data, type = "response")
+
+# Convert probabilities into class labels
+pred_class <- ifelse(pred_probs > 0.5, "versicolor", "setosa")  # Assuming a binary classification for illustration
+
+# Create confusion matrix
+conf_matrix <- table(Predicted = pred_class, Actual = test_data$Species)
+print("Confusion Matrix:")
+print(conf_matrix)
+
+# Evaluate the model's performance: Accuracy, Precision, Recall, F1 Score
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- conf_matrix["versicolor", "versicolor"] / sum(conf_matrix["versicolor", ])
+recall <- conf_matrix["versicolor", "versicolor"] / sum(conf_matrix[, "versicolor"])
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", precision, "\n")
+cat("Recall:", recall, "\n")
+cat("F1 Score:", f1_score, "\n")
+
+
+
