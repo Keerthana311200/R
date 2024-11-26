@@ -1,0 +1,66 @@
+# 1)Create the data frame
+exam_data <- data.frame(
+  name = c('Anastasia', 'Dima', 'Katherine', 'James', 'Emily', 'Michael', 'Matthew', 'Laura', 'Kevin', 'Jonas'),
+  score = c(12.5, 9, 16.5, 12, 9, 20, 14.5, 13.5, 8, 19),
+  attempts = c(1, 3, 2, 3, 2, 3, 1, 1, 2, 1),
+  qualify = c('yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes')
+)
+
+# Display the data frame
+print(exam_data)
+
+# Summary of the dataset
+summary(exam_data)
+
+2)
+# Create a vector
+numeric_vector <- c(1, 2, 3, 4, 5)
+
+# Create a matrix
+numeric_matrix <- matrix(1:9, nrow = 3, byrow = TRUE)
+
+# Define a custom function
+my_function <- function(x) {
+  return(x^2)
+}
+
+# Create a list containing the vector, matrix, and function
+my_list <- list(numeric_vector = numeric_vector, numeric_matrix = numeric_matrix, function_example = my_function)
+
+# Display the list
+print(my_list)
+
+# Applying the function to the numeric vector
+squared_values <- my_list$function_example(my_list$numeric_vector)
+print(squared_values)
+
+3)
+# Load the USArrests dataset
+data("USArrests")
+
+# a. Summary of the dataset
+summary(USArrests)
+
+# b. State with the largest total number of rapes
+state_largest_rape <- rownames(USArrests)[which.max(USArrests$Rape)]
+cat("State with the largest total number of rapes:", state_largest_rape, "\n")
+
+# c. Correlation among features
+print(cor(USArrests))
+
+# d. States with assault arrests greater than the median
+states_above_median <- rownames(USArrests)[USArrests$Assault > median(USArrests$Assault)]
+cat("States with assault arrests greater than the median:", states_above_median, "\n")
+
+
+4)
+# Read the CSV file
+sales_data <- read.csv("sales_data.csv")
+
+# Display the contents
+print(sales_data)
+
+# Print the data structure
+str(sales_data)
+
+
