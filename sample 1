@@ -1,0 +1,23 @@
+#arithmatics operations 
+a<-1.00001
+b<-1.00002
+cat("sum: ",a+b,"math: ",sum(a,b),"\n")
+cat("diff: ",a-b,"math:",a-b,"\n")
+
+#2)
+data(airquality)
+summary(airquality)
+library(reshape2)
+long_data<-melt(airquality,id.vars=c("Month","Day"))
+head(long_data)
+
+#3) logestic regression confusion matrix& 
+
+actual <- c("setosa", "versicolor", "virginica", "setosa", "versicolor")
+predicted <- c("setosa", "setosa", "virginica", "setosa", "versicolor")
+conf_matrix <- table(Predicted = predicted, Actual = actual)
+print(conf_matrix)
+
+#4)Multidimensional Array
+arr<-array(1:24,dim=c(3,4,2))
+cat("element:",arr[2,3,1],"\n")
